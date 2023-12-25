@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles/index.css">
+  <title>Sushi Rolls Shop</title>
+
+</head>
+<body>
+  <header>
+    <h1>Sushi Rolls Shop</h1>
+    <p>Delicious sushi rolls for every taste!</p>
+  </header>
+
+
+  <div id="app">
+    <main>
+      <h2>Our Menu</h2>
+      <!-- Add your sushi roll content here -->
+      <div class="cart">
+        <h3>Ваша корзина: {{ cart_counter }}</h3>
+    
+        <div v-for="(item, index) in cart_items" class="cart-item" :class="{ 'hidden-item': index > 1 && !showAllItems }">
+            
+          <span>{{ item.название }}: {{ item.цена }}руб </span> <button class="cart_del" @click="delFromCart(item)">X</button>
+            
+        </div>
+    
+        <button v-if="cart_items.length > 2" @click="toggleShowAllItems">
+          {{ showAllItems ? 'Скрыть' : 'Показать все' }}
+        </button>
+    
+        Сумма: {{ cart_sum }}р
+        <button @click="pay" class="pay_btn_first">Оплатить</button>
+      </div>
+
+  <div class="menu-container">
+    <div v-for="category in data_keys" :key="category" class="newCategory">
+      <h2>{{ category }}</h2>
+      <div class="item-grid">
+        <div v-for="item in data[category]" class="categoryItem">
+          <div class="item-square">
+            <img src="./img/default.png" alt="">
+            <div class="item-details">
+              <p>{{ item.название }}</p>
+              <p>{{ item.цена }} рублей</p>
+              <p>Кол-во: {{ item.количество }} шт.</p>
+              <p>Вес: {{ item.вес }} г.</p>
+              <button @click="addToCart(item)">В корзину</button>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal" v-if="isModalVisible">
+    <div class="modal-content" @click.stop>
+      <h2>Список заказов</h2>
+        <div v-for="item in cart_items" :key="item.название">{{ item.название }} - {{ item.цена }} рублей</div>
+        <button @click="payAccept" class="payAccept_btn">Подтвердить оплату {{ cart_sum }} рублей</button>
+    </div>
+  </div>
+
+      <h2>Order Now!</h2>
+      
+      <form>
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+  
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+  
+        <label for="phone">Phone:</label>
+        <input type="tel" id="phone" name="phone" required>
+  
+        <button type="submit">Place Order</button>
+      </form>
+    </main>
+  </div>
+
+  <footer>
+    <p>&copy; 2023 Sushi Rolls Shop. All rights reserved.</p>
+  </footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.2/axios.min.js" integrity="sha512-b94Z6431JyXY14iSXwgzeZurHHRNkLt9d6bAHt7BZT38eqV+GyngIi/tVye4jBKPYQ2lBdRs0glww4fmpuLRwA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script type="module" src="scripts/index.js"></script>
+</body>
+</html>
